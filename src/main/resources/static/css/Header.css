@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header-section {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px 40px 20px;
+    background-color: #282c34;
+    color: white;
+}
+
+.header-content {
+    max-width: 50%;
+}
+
+.header-content h1 {
+    font-size: 3rem;
+    margin: 20px;
+    color: white;
+}
+
+.header-content p {
+    font-size: 1.2rem;
+    margin: 40px 20px;
+}
+
+.header-btn {
+    padding: 10px 20px;
+    font-size: 2rem;
+    background-color: #9ac965;
+    color: #282c34;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 20px;
+}
+
+.header-image img {
+    width: 700px;
+    border-radius: 10px;
+}

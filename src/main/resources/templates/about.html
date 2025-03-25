@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Про нас - Sportify</title>
+    <link rel="stylesheet" th:href="@{/css/Navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/About.css}">
+    <link rel="stylesheet" th:href="@{/css/Footer.css}">
+</head>
+<body>
+<!-- Navbar -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- Основной контент -->
+<section class="about-section">
+    <div class="container">
+        <h1>Про нас</h1>
+        <div class="wrapper">
+            <div class="left-content">
+                <!-- Информация о человеке -->
+                <div class="my-info">
+                    <img th:src="@{/images/my_foto.jpg}" alt="Фото Олександра Золотопупа" class="my-photo"/>
+                    <h2 class="my-name">Олександр Золотопуп</h2>
+                    <p class="my-desc">Зараз я навчаюсь в Комп'ютерній Академії IT Step на курсі «Розробка програмного забезпечення» з метою здобути нову та перспективну професію. Я є частиною команди Sportify, яка прагне зробити спорт доступним для кожного.</p>
+                </div>
+
+                <!-- Контакты -->
+                <div class="contacts-container">
+                    <h3 class="contacts-title">Контакти</h3>
+                    <p class="contacts-item">
+                        <span class="contacts-type">Телефон:</span>
+                        <a class="contacts-link" href="tel:+380501454556">+38 050 145 45 56</a>
+                    </p>
+                    <p class="contacts-item">
+                        <span class="contacts-type">Email:</span>
+                        <a class="contacts-link" href="mailto:zolotopup76@gmail.com">zolotopup76@gmail.com</a>
+                    </p>
+                </div>
+
+                <!-- Технические навыки -->
+                <div class="skills-container">
+                    <h3 class="skills-title">Технічні навички</h3>
+                    <ul class="skills-list">
+                        <li class="skills-list-item">HTML5</li>
+                        <li class="skills-list-item">CSS3</li>
+                        <li class="skills-list-item">C++</li>
+                        <li class="skills-list-item">C#</li>
+                        <li class="skills-list-item">SQL</li>
+                        <li class="skills-list-item">GIT</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <!-- Опыт работы -->
+                <div class="work-experience-container">
+                    <h3 class="work-experience-title">Досвід роботи</h3>
+
+                    <div class="work-experience-company-container">
+                        <h4 class="work-experience-company">Менеджер із закупівель <span class="company-name">ТОВ Хлібозавод "Ново-Баварський"</span></h4>
+                        <p class="work-experience-period">Квітень 2016 - по теперішній час | Україна</p>
+                        <ul class="work-experience-list">
+                            <li class="work-experience-item">Забезпечую хлібозавод борошном.</li>
+                            <li class="work-experience-item">Контролюю якість сировини.</li>
+                            <li class="work-experience-item">Контролюю зберігання сировини.</li>
+                            <li class="work-experience-item">Допомагаю в роботі головного інженера.</li>
+                        </ul>
+                    </div>
+
+                    <div class="work-experience-company-container">
+                        <h4 class="work-experience-company">Директор з виробництва <span class="company-name">Харчове виробництво, млин</span></h4>
+                        <p class="work-experience-period">Вересень 2010 - Квітень 2016 | Україна</p>
+                        <ul class="work-experience-list">
+                            <li class="work-experience-item">Забезпечував безперебійну роботу підприємства на всіх виробничих циклах.</li>
+                            <li class="work-experience-item">Брав участь у модернізації обладнання та закупівлі сировини.</li>
+                            <li class="work-experience-item">Керував персоналом, займався підбором та навчанням.</li>
+                            <li class="work-experience-item">Розробляв стратегічні плани розвитку виробництва.</li>
+                        </ul>
+                    </div>
+
+                    <div class="work-experience-company-container">
+                        <h4 class="work-experience-company">Механік <span class="company-name">Харчове виробництво, млин</span></h4>
+                        <p class="work-experience-period">Вересень 2003 - Вересень 2010 | Україна</p>
+                    </div>
+
+                    <div class="work-experience-company-container">
+                        <h4 class="work-experience-company">Електрик <span class="company-name">Харківський державний хлібозавод</span></h4>
+                        <p class="work-experience-period">Квітень 1996 - Вересень 2003 | Україна</p>
+                    </div>
+                </div>
+
+                <!-- Образование -->
+                <div class="education-container">
+                    <h3 class="education-title">Освіта</h3>
+                    <h4 class="education-company">Харківський технологічний університет “IT STEP”</h4>
+                    <p class="education-management"><b>Розробник програмного забезпечення</b></p>
+                    <p class="education-period">Листопад 2022 - по теперішній час | Україна</p>
+                    <h4 class="education-company">Харківський національний технічний університет сільського господарства</h4>
+                    <p class="education-management"><b>Машинобудування</b></p>
+                    <p class="education-period">Вересень 2011 - Червень 2016 | Україна</p>
+                    <h4 class="education-company">Коледж переробної та харчової промисловості, Харків</h4>
+                    <p class="education-management"><b>Експлуатація та ремонт обладнання</b></p>
+                    <p class="education-period">Вересень 2008 - Червень 2011 | Україна</p>
+                    <h4 class="education-company">Професійне училище, Харків</h4>
+                    <p class="education-management"><b>Електрик</b></p>
+                    <p class="education-period">Вересень 1993 - Червень 1994 | Україна</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

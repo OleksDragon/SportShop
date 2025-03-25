@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина - Sportify</title>
+    <link rel="stylesheet" th:href="@{/css/Navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/Cart.css}">
+    <link rel="stylesheet" th:href="@{/css/Footer.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container">
+    <h1>Корзина</h1>
+    <div th:if="${message}" class="message" th:text="${message}"></div>
+    <div th:if="${cart.items.isEmpty()}">
+        <p>Ваша корзина порожня.</p>
+    </div>
+    <div th:unless="${cart.items.isEmpty()}">
+        <table class="cart-table">
+            <thead>
+            <tr>
+                <th>Товар</th>
+                <th>Ціна</th>
+                <th>Кількість</th>
+                <th>Сума</th>
+                <th>Дія</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cart.items}">
+                <td th:text="${item.product.name}"></td>
+                <td th:text="${item.product.price} + ' грн'"></td>
+                <td>
+                    <form th:action="@{/cart/update}" method="post" class="update-form">
+                        <input type="hidden" name="productId" th:value="${item.product.id}"/>
+                        <input type="number" name="quantity" th:value="${item.quantity}" min="1" th:max="${item.product.stock}" class="quantity-input"/>
+                        <button type="submit" class="update-btn">Оновити</button>
+                    </form>
+                </td>
+                <td th:text="${item.subtotal} + ' грн'"></td>
+                <td>
+                    <form th:action="@{/cart/remove}" method="post">
+                        <input type="hidden" name="productId" th:value="${item.product.id}"/>
+                        <button type="submit" class="remove-btn">Видалити</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="cart-total">
+            <p th:text="'Загальна сума: ' + ${total} + ' грн'"></p>
+            <form th:action="@{/cart/checkout}" method="post">
+                <button type="submit" class="checkout-btn">Оформити замовлення</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sportify - Інтернет-магазин спортивних товарів</title>
+    <link rel="stylesheet" th:href="@{/css/Navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/Header.css}">
+    <link rel="stylesheet" th:href="@{/css/Footer.css}">
+    <link rel="stylesheet" th:href="@{/css/Logo.css}">
+    <link rel="stylesheet" th:href="@{/css/Features.css}">
+    <link rel="stylesheet" th:href="@{/css/Testimonials.css}">
+</head>
+<body>
+<!-- Navbar -->
+<nav th:fragment="navbar" class="navbar-left">
+    <ul class="navbar-menu">
+        <li><a th:href="@{/products}">Товари</a></li>
+        <li><a th:href="@{/about}">Про нас</a></li>
+        <li><a th:href="@{/login}" class="navbar-btn">Увійти</a></li>
+    </ul>
+</nav>
+
+<!-- Header Section -->
+<div th:replace="~{fragments/header :: headerSection}"></div>
+
+<!-- Features -->
+<div th:replace="~{fragments/features :: features}"></div>
+
+<!-- Testimonials -->
+<div th:replace="~{fragments/testimonials :: testimonials}"></div>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

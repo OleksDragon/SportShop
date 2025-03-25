@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'Oswald-Stencil';
+    src: url('static/fonts/Oswald-Stencil.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.logo {
+    background-color: #282c34;
+    color: #9ac965;
+    text-align: center;
+    padding: 10px 20px 30px 20px;
+    font-family: 'Oswald-Stencil', sans-serif;
+    font-size: 4em;
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-shadow:
+            1px 1px 2px black,
+            -1px -1px 2px #9ac965,
+            0px 0px 10px rgba(154, 201, 101, 0.7),
+            0px 0px 20px rgba(154, 201, 101, 0.4);
+}

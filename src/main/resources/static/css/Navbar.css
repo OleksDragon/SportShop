@@ -1,0 +1,77 @@
+.navbar {
+    background-color: #282c34;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.navbar-left {background-color: #282c34;
+    padding: 25px 20px;
+    display: flex;
+    justify-content: flex-end;;
+    align-items: center;
+}
+
+.navbar-logo {
+    color: #9ac965;
+    font-family: 'Oswald-Stencil', sans-serif;
+    font-size: 2rem;
+    text-decoration: none;
+    padding-left: 20px;
+}
+
+.navbar-menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-menu li {
+    margin-left: 20px;
+}
+
+.navbar-menu a {
+    color: #fff;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar-menu a:hover {
+    color: #9ac965;
+}
+
+.navbar-btn {
+    background-color: #9ac965;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-btn:hover {
+    background-color: #7ba84e;
+    color: #fff;
+}
+
+.navbar-cart {
+    color: #fff;
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar-cart:hover {
+    color: #9ac965;
+}

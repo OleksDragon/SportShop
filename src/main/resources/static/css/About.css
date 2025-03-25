@@ -1,0 +1,235 @@
+/* Основной контейнер */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 80px;
+}
+
+/* Заголовок страницы */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #282c34;
+    margin-bottom: 40px;
+}
+
+/* Обёртка для двух колонок */
+.wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Левая колонка */
+.left-content {
+    flex: 1;
+    min-width: 300px;
+    max-width: 350px;
+}
+
+/* Правая колонка */
+.main-content {
+    flex: 2;
+    min-width: 300px;
+    max-width: 650px;
+}
+
+/* Моя информация */
+.my-info {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.my-photo {
+    max-width: 100%;
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.my-name {
+    font-size: 2rem;
+    color: #282c34;
+    margin: 0 0 10px;
+}
+
+.my-desc {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Контакты */
+.contacts-container {
+    margin-bottom: 30px;
+}
+
+.contacts-title {
+    font-size: 1.5rem;
+    color: #282c34;
+    margin-bottom: 15px;
+}
+
+.contacts-item {
+    font-size: 1rem;
+    color: #555;
+    margin: 10px 0;
+}
+
+.contacts-type {
+    font-weight: bold;
+    color: #9ac965;
+}
+
+.contacts-link {
+    color: #282c34;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contacts-link:hover {
+    color: #9ac965;
+}
+
+/* Технические навыки */
+.skills-container {
+    margin-bottom: 30px;
+}
+
+.skills-title {
+    font-size: 1.5rem;
+    color: #282c34;
+    margin-bottom: 15px;
+}
+
+.skills-list {
+    list-style: none;
+    padding: 0;
+}
+
+.skills-list-item {
+    font-size: 1rem;
+    color: #555;
+    margin: 8px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.skills-list-item::before {
+    content: "•";
+    color: #9ac965;
+    position: absolute;
+    left: 0;
+}
+
+/* Опыт работы */
+.work-experience-container {
+    margin-bottom: 40px;
+}
+
+.work-experience-title {
+    font-size: 1.5rem;
+    color: #282c34;
+    margin-bottom: 20px;
+}
+
+.work-experience-company-container {
+    margin-bottom: 25px;
+}
+
+.work-experience-company {
+    font-size: 1.2rem;
+    color: #282c34;
+    margin: 0 0 10px;
+}
+
+.company-name {
+    font-weight: normal;
+    color: #9ac965;
+}
+
+.work-experience-period {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.work-experience-period-line {
+    margin: 0 10px;
+}
+
+.work-experience-list {
+    list-style: none;
+    padding: 0;
+}
+
+.work-experience-item {
+    font-size: 1rem;
+    color: #555;
+    margin: 8px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.work-experience-item::before {
+    content: "•";
+    color: #9ac965;
+    position: absolute;
+    left: 0;
+}
+
+/* Образование */
+.education-container {
+    margin-bottom: 40px;
+}
+
+.education-title {
+    font-size: 1.5rem;
+    color: #282c34;
+    margin-bottom: 20px;
+}
+
+.education-company {
+    font-size: 1.2rem;
+    color: #282c34;
+    margin: 0 0 5px;
+}
+
+.education-management {
+    font-size: 1rem;
+    color: #555;
+    margin: 0 0 5px;
+}
+
+.education-period {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.education-period-line {
+    margin: 0 10px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+        max-width: 100%;
+    }
+
+    .left-content, .main-content {
+        flex: 1;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .my-photo {
+        width: 200px;
+    }
+}

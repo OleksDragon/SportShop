@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="testimonials" class="testimonials-section">
+    <h2>Відгуки наших клієнтів</h2>
+    <div class="testimonials">
+        <div class="testimonial">
+            <img th:src="@{/images/IvanI.jpg}" alt="Іван І." class="testimonial-image"/>
+            <p>“Чудова якість товарів і швидка доставка. Рекомендую!”</p>
+            <h4>— Іван І.</h4>
+        </div>
+        <div class="testimonial">
+            <img th:src="@{/images/OlgaK.jpg}" alt="Ольга К." class="testimonial-image"/>
+            <p>“Великий вибір спортивного інвентарю за доступними цінами.”</p>
+            <h4>— Ольга К.</h4>
+        </div>
+        <div class="testimonial">
+            <img th:src="@{/images/DmitroP.jpg}" alt="Дмитро П." class="testimonial-image"/>
+            <p>“Найкращий магазин для спортивних покупок!”</p>
+            <h4>— Дмитро П.</h4>
+        </div>
+    </div>
+</div>
+</body>
+</html>

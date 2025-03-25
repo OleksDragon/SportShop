@@ -1,9 +1,7 @@
 package com.example.sport_shop.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,15 +24,15 @@ public class Order {
     private List<OrderItem> items;
 
     @Column(nullable = false)
-    private double totalPrice;
+    private String shippingAddress;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @Column(nullable = false)
-    private LocalDateTime orderDate;
+    private LocalDateTime createdAt;
 
-    private String shippingAddress;
+    @Column(nullable = false)
+    private double totalPrice;
 }
-
