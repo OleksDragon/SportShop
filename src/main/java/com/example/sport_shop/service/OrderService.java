@@ -1,52 +1,44 @@
 package com.example.sport_shop.service;
 
-import com.example.sport_shop.model.*;
+import com.example.sport_shop.model.Order;
+import com.example.sport_shop.model.OrderItem;
 import com.example.sport_shop.repository.OrderRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
+
     @Autowired
     private OrderRepository orderRepository;
 
     @Autowired
-    private CartService cartService;
-
-    @Autowired
     private ProductService productService;
 
-    public Order createOrder(User user, String shippingAddress) {
-        Cart cart = cartService.getOrCreateCart(user);
-        if (cart.getItems().isEmpty()) {
-            throw new IllegalStateException("Кошик порожній");
+    @Transactional
+    public void saveOrder(Order order) {
+        logger.info("Збереження замовлення для користувача: {}", order.getUser().getUsername());
+        for (OrderItem item : order.getItems()) {
+            logger.info("Оновлення складу для товару: {} (ID: {}), кількість: {}",
+                    item.getProduct().getName(), item.getProduct().getId(), item.getQuantity());
+            productService.updateStock(item.getProduct(), item.getQuantity());
         }
+        orderRepository.save(order);
+        logger.info("Замовлення успішно збережено з ID: {}", order.getId());
+    }
 
-        Order order = new Order();
-        order.setUser(user);
-        order.setShippingAddress(shippingAddress);
-        order.setStatus(OrderStatus.NEW);
-        order.setCreatedAt(LocalDateTime.now());
+    public List<Order> findAll() {
+        return orderRepository.findAll();
+    }
 
-        List<OrderItem> orderItems = cart.getItems().stream()
-                .map(cartItem -> {
-                    Product product = cartItem.getProduct();
-                    int quantity = cartItem.getQuantity();
-                    productService.updateStock(product, quantity);
-                    return new OrderItem(null, order, product, quantity, product.getPrice());
-                })
-                .collect(Collectors.toList());
-
-        order.setItems(orderItems);
-        order.setTotalPrice(orderItems.stream()
-                .mapToDouble(item -> item.getPrice() * item.getQuantity())
-                .sum());
-
-        cartService.clearCart(cart);
-        return orderRepository.save(order);
+    public void deleteById(Long id) {
+        orderRepository.deleteById(id);
     }
 }

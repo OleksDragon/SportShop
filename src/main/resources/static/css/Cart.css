@@ -1,64 +1,106 @@
 .container {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 80px 20px 20px 20px;
+    padding: 20px;
+    padding-top: 80px;
+    width: 60%;
 }
 
 h1 {
     text-align: center;
     margin-bottom: 30px;
     color: #282c34;
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-transform: uppercase;
 }
 
-.cart-items {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.cart-table {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.cart-item {
-    background-color: #f9f9f9;
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f5f5f5;
+    color: #282c34;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+td {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.quantity-form {
+    display: inline-block;
+}
+
+.quantity-input {
+    width: 60px;
+    padding: 5px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    padding: 15px;
-    transition: box-shadow 0.3s ease;
+    font-size: 1rem;
 }
 
-.cart-item:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.remove-form {
+    display: inline-block;
 }
 
-.item-title {
-    font-size: 1.5rem;
-    margin: 10px 0;
+.remove-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+    background-color: #c0392b;
+}
+
+.cart-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.continue-btn, .order-btn {
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.continue-btn {
+    background-color: #ddd;
     color: #282c34;
 }
 
-.item-quantity {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 10px;
-}
-
-.item-price {
-    font-size: 1.2rem;
-    color: #9ac965;
-    font-weight: bold;
-    margin-bottom: 15px;
+.continue-btn:hover {
+    background-color: #bbb;
 }
 
 .order-btn {
-    display: inline-block;
-    padding: 10px 20px;
     background-color: #9ac965;
     color: #282c34;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    transition: background-color 0.3s ease;
-    text-align: center;
 }
 
 .order-btn:hover {
@@ -67,6 +109,7 @@ h1 {
 
 .empty-cart {
     text-align: center;
-    font-size: 1.2rem;
-    color: #777;
+    font-size: 1.5rem;
+    color: #666;
+    margin-top: 20px;
 }

@@ -2,26 +2,109 @@
 <html lang="uk" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
   <title>Кошик - Sportify</title>
   <link rel="stylesheet" th:href="@{/css/Navbar.css}">
   <link rel="stylesheet" th:href="@{/css/Cart.css}">
   <link rel="stylesheet" th:href="@{/css/Footer.css}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script th:inline="javascript">
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function saveCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function addToCart(productId, name, price, quantity) {
+      let item = cart.find(i => i.productId === productId);
+      if (item) {
+        item.quantity += quantity;
+      } else {
+        cart.push({ productId, name, price, quantity });
+      }
+      saveCart();
+      renderCart();
+    }
+
+    function removeItem(productId) {
+      console.log("Removing item with productId:", productId);
+      const id = parseInt(productId);
+      console.log("Cart before removal:", cart);
+      cart = cart.filter(item => parseInt(item.productId) !== id);
+      console.log("Cart after removal:", cart);
+      saveCart();
+      renderCart();
+    }
+
+    function calculateTotal() {
+      return cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+    }
+
+    function renderCart() {
+      const $tableBody = $('tbody');
+      $tableBody.empty();
+      if (cart.length === 0) {
+        $('.cart-table').replaceWith('<p class="empty-cart">Ваш кошик порожній</p>');
+        return;
+      }
+      cart.forEach(item => {
+        $tableBody.append(`
+                    <tr class="cart-item" data-product-id="${item.productId}">
+                        <td>${item.name}</td>
+                        <td>
+                            <input type="number" name="quantity_${item.productId}" value="${item.quantity}" min="1" class="quantity-input" onchange="updateQuantity(${item.productId}, this.value)">
+                        </td>
+                        <td>${(item.price * item.quantity).toFixed(2)} грн</td>
+                        <td>
+                            <button class="remove-btn" onclick="removeItem(${item.productId})"><i class="fas fa-trash"></i> Видалити</button>
+                        </td>
+                    </tr>
+                `);
+      });
+      // Оновлюємо загальну суму
+      $('#total-amount').text(`Загальна сума: ${calculateTotal()} грн`);
+    }
+
+    function updateQuantity(productId, quantity) {
+      const id = parseInt(productId);
+      let item = cart.find(i => parseInt(i.productId) === id);
+      if (item && quantity > 0) {
+        item.quantity = parseInt(quantity);
+        saveCart();
+        renderCart();
+      }
+    }
+
+    $(document).ready(function() {
+      renderCart();
+    });
+  </script>
 </head>
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <div class="container">
   <h1>Ваш кошик</h1>
-  <div class="cart-items" th:if="${cart.items} and ${!cart.items.isEmpty()}">
-    <div class="cart-item" th:each="item : ${cart.items}">
-      <h2 th:text="${item.product.name}" class="item-title"></h2>
-      <p th:text="'Кількість: ' + ${item.quantity}" class="item-quantity"></p>
-      <p th:text="'Ціна: ' + ${item.product.price * item.quantity} + ' грн'" class="item-price"></p>
+  <div class="cart-table">
+    <table>
+      <thead>
+      <tr>
+        <th>Товар</th>
+        <th>Кількість</th>
+        <th>Вартість</th>
+        <th>Дія</th>
+      </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <p id="total-amount" style="text-align: end; margin-right: 5%; font-size: 20px">Загальна сума: 0.00 грн</p>
+    <div class="cart-actions">
+      <a th:href="@{/products}" class="continue-btn">Продовжити покупки</a>
+      <a th:href="@{/order}" class="order-btn">Оформити замовлення</a>
     </div>
-    <a th:href="@{/order}" class="order-btn">Оформити замовлення</a>
   </div>
-  <p th:if="${cart.items.isEmpty()}" class="empty-cart">Ваш кошик порожній</p>
 </div>
 
 <div th:replace="~{fragments/footer :: footer}"></div>

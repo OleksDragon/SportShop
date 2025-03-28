@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "order_items")
 @Data
+@ToString(exclude = "order")
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItem {
@@ -15,11 +17,11 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
@@ -27,5 +29,5 @@ public class OrderItem {
     private int quantity;
 
     @Column(nullable = false)
-    private double price; // Цена на момент покупки
+    private double price;
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Замовлення - Адмін-панель</title>
+  <link rel="stylesheet" th:href="@{/css/Navbar.css}">
+  <style>
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container">
+  <h1>Замовлення</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Користувач</th>
+      <th>Сума</th>
+      <th>Статус</th>
+      <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+      <td th:text="${order.id}"></td>
+      <td th:text="${order.user.username}"></td>
+      <td th:text="${order.totalPrice}"></td>
+      <td th:text="${order.status}"></td>
+      <td>
+        <form th:action="@{/adminPanel/orders/delete/{id}(id=${order.id})}" method="post" style="display:inline;">
+          <button type="submit">Видалити</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <a th:href="@{/adminPanel}">Назад до адмін-панелі</a>
+</div>
+</body>
+</html>

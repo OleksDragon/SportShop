@@ -1,8 +1,6 @@
 package com.example.sport_shop.service;
 
-import com.example.sport_shop.model.Category;
 import com.example.sport_shop.model.Product;
-import com.example.sport_shop.repository.CategoryRepository;
 import com.example.sport_shop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +13,6 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
     public List<Product> findAll() {
         return productRepository.findAll();
     }
@@ -26,16 +21,20 @@ public class ProductService {
         return productRepository.findById(id).orElse(null);
     }
 
-    public void updateStock(Product product, int quantity) {
-        product.setStock(product.getStock() - quantity);
-        productRepository.save(product);
-    }
-
     public void save(Product product) {
         productRepository.save(product);
     }
 
-    public void saveCategory(Category category) {
-        categoryRepository.save(category);
+    public void updateStock(Product product, int quantity) {
+        if (product != null && product.getStock() >= quantity) {
+            product.setStock(product.getStock() - quantity);
+            productRepository.save(product);
+        } else {
+            throw new IllegalStateException("Недостатньо товару на складі або товар не знайдено");
+        }
+    }
+
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
     }
 }

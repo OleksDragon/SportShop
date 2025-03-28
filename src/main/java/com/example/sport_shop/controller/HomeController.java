@@ -18,8 +18,8 @@ public class HomeController {
         return "about";
     }
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
+    @GetMapping("/logout")
+    public String showLogoutPage() {
+        return "logout";
     }
 }

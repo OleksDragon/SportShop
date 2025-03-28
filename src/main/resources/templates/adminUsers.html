@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Користувачі - Адмін-панель</title>
+  <link rel="stylesheet" th:href="@{/css/Navbar.css}">
+  <style>
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container">
+  <h1>Користувачі</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Ім'я користувача</th>
+      <th>Email</th>
+      <th>Ролі</th>
+      <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+      <td th:text="${user.id}"></td>
+      <td th:text="${user.username}"></td>
+      <td th:text="${user.email}"></td>
+      <td th:text="${user.roles}"></td>
+      <td>
+        <form th:action="@{/adminPanel/users/delete/{id}(id=${user.id})}" method="post" style="display:inline;">
+          <button type="submit">Видалити</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <a th:href="@{/adminPanel}">Назад до адмін-панелі</a>
+</div>
+</body>
+</html>

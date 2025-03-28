@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Оформлення замовлення - Sportify</title>
+  <link rel="stylesheet" th:href="@{/css/Navbar.css}">
+  <link rel="stylesheet" th:href="@{/css/Order.css}">
+  <link rel="stylesheet" th:href="@{/css/Footer.css}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script th:inline="javascript">
+    $(document).ready(function() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let orderSuccess = false;
+      if (orderSuccess) {
+        localStorage.removeItem('cart');
+        console.log("Кошик очищено після успішного замовлення");
+      } else {
+        cart.forEach(item => {
+          $('#cartItems').append(`
+                        <input type="hidden" name="quantity_${item.productId}" value="${item.quantity}">
+                    `);
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container">
+  <h1>Оформлення замовлення</h1>
+  <div th:if="${orderSuccess}" class="success-message">Дякуємо за замовлення!</div>
+  <div th:unless="${orderSuccess}">
+    <form th:action="@{/order}" method="post">
+      <div id="cartItems"></div>
+      <div class="form-group">
+        <label for="shippingAddress">Адреса доставки:</label>
+        <input type="text" id="shippingAddress" name="shippingAddress" class="form-input" required>
+      </div>
+      <div th:if="${error}" th:text="${error}" class="error"></div>
+      <button type="submit" class="submit-btn">Оформити замовлення</button>
+    </form>
+  </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

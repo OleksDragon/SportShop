@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Товари - Адмін-панель</title>
+  <link rel="stylesheet" th:href="@{/css/Navbar.css}">
+  <style>
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; border: 1px solid #ccc; }
+    .form-group { margin: 10px 0; }
+  </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container">
+  <h1>Товари</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Назва</th>
+      <th>Опис</th>
+      <th>Ціна</th>
+      <th>Запас</th>
+      <th>Категорія</th>
+      <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+      <td th:text="${product.id}"></td>
+      <td th:text="${product.name}"></td>
+      <td th:text="${product.description}"></td>
+      <td th:text="${product.price}"></td>
+      <td th:text="${product.stock}"></td>
+      <td th:text="${product.category.name}"></td>
+      <td>
+        <form th:action="@{/adminPanel/products/delete/{id}(id=${product.id})}" method="post" style="display:inline;">
+          <button type="submit">Видалити</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h2>Додати товар</h2>
+  <form th:action="@{/adminPanel/products/add}" method="post" th:object="${product}">
+    <div class="form-group">
+      <label for="name">Назва:</label>
+      <input type="text" id="name" name="name" required th:field="*{name}"/>
+    </div>
+    <div class="form-group">
+      <label for="description">Опис:</label>
+      <input type="text" id="description" name="description" required th:field="*{description}"/>
+    </div>
+    <div class="form-group">
+      <label for="price">Ціна:</label>
+      <input type="number" id="price" name="price" step="0.01" required th:field="*{price}"/>
+    </div>
+    <div class="form-group">
+      <label for="stock">Запас:</label>
+      <input type="number" id="stock" name="stock" required th:field="*{stock}"/>
+    </div>
+    <div class="form-group">
+      <label for="category">Категорія:</label>
+      <select id="category" name="category.id" required>
+        <option value="">Оберіть категорію</option>
+        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+      </select>
+    </div>
+    <button type="submit">Додати</button>
+  </form>
+  <a th:href="@{/adminPanel}">Назад до адмін-панелі</a>
+</div>
+</body>
+</html>

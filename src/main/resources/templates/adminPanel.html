@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Адмін-панель - Sportify</title>
+  <link rel="stylesheet" th:href="@{/css/Navbar.css}">
+  <style>
+    .admin-nav {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .admin-nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .admin-nav a:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container">
+  <h1>Ласкаво просимо до адмін-панелі!</h1>
+  <div class="admin-nav">
+    <a th:href="@{/adminPanel/products}">Товари</a>
+    <a th:href="@{/adminPanel/orders}">Замовлення</a>
+    <a th:href="@{/adminPanel/users}">Користувачі</a>
+  </div>
+  <p>Оберіть розділ для керування магазином.</p>
+</div>
+</body>
+</html>
