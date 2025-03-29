@@ -47,7 +47,7 @@ public class AdminPanelController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private static final String UPLOAD_DIR = "src/main/resources/static/images/products/";
+    private static final String UPLOAD_DIR = "target/classes/static/images/products/";
 
     @GetMapping
     public String showAdminPanel() {
@@ -265,7 +265,7 @@ public class AdminPanelController {
     }
 
     private String saveImage(MultipartFile image) throws IOException {
-        String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+        String fileName = image.getOriginalFilename();
         File directory = new File(UPLOAD_DIR);
         if (!directory.exists()) {
             directory.mkdirs();
