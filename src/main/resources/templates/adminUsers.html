@@ -4,9 +4,106 @@
   <meta charset="UTF-8">
   <title>Користувачі - Адмін-панель</title>
   <link rel="stylesheet" th:href="@{/css/Navbar.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    table { width: 100%; border-collapse: collapse; }
-    th, td { padding: 10px; border: 1px solid #ccc; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f5f6fa;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    h1, h2 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    .form-group {
+      margin: 15px 0;
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    input, select {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    select[multiple] {
+      height: 100px;
+    }
+    button {
+      padding: 10px 15px;
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #2980b9, #1f6391);
+    }
+    .delete-btn {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+    .delete-btn:hover {
+      background: linear-gradient(135deg, #c0392b, #992d22);
+    }
+    .edit-btn {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+    }
+    .edit-btn:hover {
+      background: linear-gradient(135deg, #27ae60, #219653);
+    }
+    .actions {
+      display: flex;
+      gap: 5px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #3498db;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -29,16 +126,73 @@
       <td th:text="${user.id}"></td>
       <td th:text="${user.username}"></td>
       <td th:text="${user.email}"></td>
-      <td th:text="${user.roles}"></td>
       <td>
+        <span th:each="role, iterStat : ${user.roles}" th:text="${role.name}" th:remove="tag"></span>
+        <span th:each="role, iterStat : ${user.roles}" th:if="${!iterStat.last}" th:text="', '" th:remove="tag"></span>
+      </td>
+      <td class="actions">
+        <form th:action="@{/adminPanel/users/edit/{id}(id=${user.id})}" method="post" style="display:inline;">
+          <button type="submit" class="edit-btn"><i class="fas fa-edit"></i> Редагувати</button>
+        </form>
         <form th:action="@{/adminPanel/users/delete/{id}(id=${user.id})}" method="post" style="display:inline;">
-          <button type="submit">Видалити</button>
+          <button type="submit" class="delete-btn"><i class="fas fa-trash"></i> Видалити</button>
         </form>
       </td>
     </tr>
     </tbody>
   </table>
-  <a th:href="@{/adminPanel}">Назад до адмін-панелі</a>
+
+  <h2>Додати користувача</h2>
+  <form th:action="@{/adminPanel/users/add}" method="post" th:object="${newUser}">
+    <div class="form-group">
+      <label for="username">Ім'я користувача:</label>
+      <input type="text" id="username" name="username" required th:field="*{username}"/>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required th:field="*{email}"/>
+    </div>
+    <div class="form-group">
+      <label for="password">Пароль:</label>
+      <input type="password" id="password" name="password" required th:field="*{password}"/>
+    </div>
+    <div class="form-group">
+      <label for="roles">Ролі:</label>
+      <select id="roles" name="roleNames" multiple required>
+        <option th:each="role : ${allRoles}" th:value="${role.name}" th:text="${role.name}"></option>
+      </select>
+    </div>
+    <button type="submit">Додати</button>
+  </form>
+
+  <h2 th:if="${editUser != null}">Редагувати користувача</h2>
+  <form th:action="@{/adminPanel/users/update}" method="post" th:object="${editUser}" th:if="${editUser != null}">
+    <input type="hidden" name="id" th:field="*{id}"/>
+    <div class="form-group">
+      <label for="editUsername">Ім'я користувача:</label>
+      <input type="text" id="editUsername" name="username" required th:field="*{username}"/>
+    </div>
+    <div class="form-group">
+      <label for="editEmail">Email:</label>
+      <input type="email" id="editEmail" name="email" required th:field="*{email}"/>
+    </div>
+    <div class="form-group">
+      <label for="editPassword">Новий пароль (залиште порожнім, якщо не змінювати):</label>
+      <input type="password" id="editPassword" name="password"/>
+    </div>
+    <div class="form-group">
+      <label for="editRoles">Ролі:</label>
+      <select id="editRoles" name="roleNames" multiple required>
+        <option th:each="role : ${allRoles}"
+                th:value="${role.name}"
+                th:text="${role.name}"
+                th:selected="${editUser.roles.![name].contains(role.name)}"></option>
+      </select>
+    </div>
+    <button type="submit">Оновити</button>
+  </form>
+
+  <a th:href="@{/adminPanel}" class="back-link">Назад до адмін-панелі</a>
 </div>
 </body>
 </html>

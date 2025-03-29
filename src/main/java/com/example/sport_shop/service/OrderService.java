@@ -41,4 +41,9 @@ public class OrderService {
     public void deleteById(Long id) {
         orderRepository.deleteById(id);
     }
+
+    public Order findById(Long id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Замовлення з ID " + id + " не знайдено"));
+    }
 }

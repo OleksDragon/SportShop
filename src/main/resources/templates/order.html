@@ -10,15 +10,16 @@
   <script th:inline="javascript">
     $(document).ready(function() {
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      let orderSuccess = false;
+      let orderSuccess = /*[[${orderSuccess}]]*/ false; // Отримуємо orderSuccess із моделі
+
       if (orderSuccess) {
-        localStorage.removeItem('cart');
+        localStorage.removeItem('cart'); // Очищаємо кошик
         console.log("Кошик очищено після успішного замовлення");
       } else {
         cart.forEach(item => {
           $('#cartItems').append(`
-                        <input type="hidden" name="quantity_${item.productId}" value="${item.quantity}">
-                    `);
+            <input type="hidden" name="quantity_${item.productId}" value="${item.quantity}">
+          `);
         });
       }
     });
@@ -29,7 +30,9 @@
 
 <div class="container">
   <h1>Оформлення замовлення</h1>
-  <div th:if="${orderSuccess}" class="success-message">Дякуємо за замовлення!</div>
+  <div th:if="${orderSuccess}" class="success-message">
+    Дякуємо за замовлення!
+  </div>
   <div th:unless="${orderSuccess}">
     <form th:action="@{/order}" method="post">
       <div id="cartItems"></div>

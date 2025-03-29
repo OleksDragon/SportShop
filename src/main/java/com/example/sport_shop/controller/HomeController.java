@@ -17,9 +17,4 @@ public class HomeController {
     public String showAboutPage() {
         return "about";
     }
-
-    @GetMapping("/logout")
-    public String showLogoutPage() {
-        return "logout";
-    }
 }

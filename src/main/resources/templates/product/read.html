@@ -20,12 +20,6 @@
       localStorage.setItem('cart', JSON.stringify(cart));
       window.location.href = '/cart'; // Перенаправлення на кошик
     }
-
-    $(document).ready(function() {
-      /*[# th:if="${productToAdd}"]*/
-      addToCart(/*[[${productToAdd.id}]]*/, /*[[${productToAdd.name}]]*/, /*[[${productToAdd.price}]]*/, 1);
-      /*[/]*/
-    });
   </script>
 </head>
 <body>

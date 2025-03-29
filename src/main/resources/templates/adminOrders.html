@@ -4,9 +4,108 @@
   <meta charset="UTF-8">
   <title>Замовлення - Адмін-панель</title>
   <link rel="stylesheet" th:href="@{/css/Navbar.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    table { width: 100%; border-collapse: collapse; }
-    th, td { padding: 10px; border: 1px solid #ccc; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f5f6fa;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    h1, h2 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    .items-list {
+      margin-left: 20px;
+      font-size: 0.9em;
+      color: #555;
+    }
+    .form-group {
+      margin: 15px 0;
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    input, select {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    button {
+      padding: 10px 15px;
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #2980b9, #1f6391);
+    }
+    .delete-btn {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+    .delete-btn:hover {
+      background: linear-gradient(135deg, #c0392b, #992d22);
+    }
+    .edit-btn {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+    }
+    .edit-btn:hover {
+      background: linear-gradient(135deg, #27ae60, #219653);
+    }
+    .actions {
+      display: flex;
+      gap: 5px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #3498db;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -19,6 +118,7 @@
     <tr>
       <th>ID</th>
       <th>Користувач</th>
+      <th>Товари</th>
       <th>Сума</th>
       <th>Статус</th>
       <th>Дії</th>
@@ -28,17 +128,85 @@
     <tr th:each="order : ${orders}">
       <td th:text="${order.id}"></td>
       <td th:text="${order.user.username}"></td>
-      <td th:text="${order.totalPrice}"></td>
-      <td th:text="${order.status}"></td>
       <td>
+        <ul class="items-list">
+          <li th:each="item : ${order.items}" th:text="${item.product.name} + ' (x' + ${item.quantity} + ', ' + ${item.price} + ' грн)'"></li>
+        </ul>
+      </td>
+      <td th:text="${order.totalPrice} + ' грн'"></td>
+      <td th:text="${order.status}"></td>
+      <td class="actions">
+        <form th:action="@{/adminPanel/orders/edit/{id}(id=${order.id})}" method="post" style="display:inline;">
+          <button type="submit" class="edit-btn"><i class="fas fa-edit"></i> Редагувати</button>
+        </form>
         <form th:action="@{/adminPanel/orders/delete/{id}(id=${order.id})}" method="post" style="display:inline;">
-          <button type="submit">Видалити</button>
+          <button type="submit" class="delete-btn"><i class="fas fa-trash"></i> Видалити</button>
         </form>
       </td>
     </tr>
     </tbody>
   </table>
-  <a th:href="@{/adminPanel}">Назад до адмін-панелі</a>
+
+  <h2>Додати замовлення</h2>
+  <form th:action="@{/adminPanel/orders/add}" method="post" th:object="${newOrder}">
+    <div class="form-group">
+      <label for="userId">Користувач:</label>
+      <select id="userId" name="userId" required>
+        <option value="">Оберіть користувача</option>
+        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="productIds">Товари:</label>
+      <select id="productIds" name="productIds" multiple required>
+        <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name} + ' (' + ${product.price} + ' грн)'"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="shippingAddress">Адреса доставки:</label>
+      <input type="text" id="shippingAddress" name="shippingAddress" required/>
+    </div>
+    <div class="form-group">
+      <label for="status">Статус:</label>
+      <select id="status" name="status" required>
+        <option th:each="status : ${T(com.example.sport_shop.model.OrderStatus).values()}" th:value="${status}" th:text="${status}"></option>
+      </select>
+    </div>
+    <button type="submit">Додати</button>
+  </form>
+
+  <h2 th:if="${editOrder != null}">Редагувати замовлення</h2>
+  <form th:action="@{/adminPanel/orders/update}" method="post" th:object="${editOrder}" th:if="${editOrder != null}">
+    <input type="hidden" name="id" th:field="*{id}"/>
+    <div class="form-group">
+      <label for="editUserId">Користувач:</label>
+      <select id="editUserId" name="userId" required>
+        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}" th:selected="${user.id == editOrder.user.id}"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="editProductIds">Товари:</label>
+      <select id="editProductIds" name="productIds" multiple required>
+        <option th:each="product : ${products}"
+                th:value="${product.id}"
+                th:text="${product.name} + ' (' + ${product.price} + ' грн)'"
+                th:selected="${selectedProductIds.contains(product.id)}"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="editShippingAddress">Адреса доставки:</label>
+      <input type="text" id="editShippingAddress" name="shippingAddress" th:field="*{shippingAddress}" required/>
+    </div>
+    <div class="form-group">
+      <label for="editStatus">Статус:</label>
+      <select id="editStatus" name="status" required>
+        <option th:each="status : ${T(com.example.sport_shop.model.OrderStatus).values()}" th:value="${status}" th:text="${status}" th:selected="${status == editOrder.status}"></option>
+      </select>
+    </div>
+    <button type="submit">Оновити</button>
+  </form>
+
+  <a th:href="@{/adminPanel}" class="back-link">Назад до адмін-панелі</a>
 </div>
 </body>
 </html>

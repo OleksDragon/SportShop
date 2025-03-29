@@ -84,6 +84,7 @@ h1 {
     display: inline-block;
     padding: 10px 20px;
     background-color: #9ac965;
+    border: none;
     color: #282c34;
     text-decoration: none;
     border-radius: 5px;

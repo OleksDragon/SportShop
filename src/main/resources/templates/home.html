@@ -10,6 +10,11 @@
     <link rel="stylesheet" th:href="@{/css/Features.css}">
     <link rel="stylesheet" th:href="@{/css/Testimonials.css}">
 </head>
+<script th:inline="javascript">
+    window.onload = function() {
+        localStorage.removeItem('cart');
+    };
+</script>
 <body>
 <!-- Navbar -->
 <nav th:fragment="navbar" class="navbar-left">
